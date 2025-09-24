@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ปฏิทินเช็คลิสต์ออกกำลังกาย - กันยายน</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      table {
+        margin: 0 auto;
+        border-collapse: collapse;
+      }
+      th, td {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        user-select: none;
+      }
+      th {
+        background-color: #ddd;
+      }
+      td.checked {
+        background-color: #4CAF50;
+        color: white;
+      }
+      #count {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ปฏิทินเช็คลิสต์ออกกำลังกาย - กันยายน 2025</h1>
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>อา</th>
+          <th>จ</th>
+          <th>อ</th>
+          <th>พ</th>
+          <th>พฤ</th>
+          <th>ศ</th>
+          <th>ส</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-body">
+        <!-- JavaScript จะเติมตรงนี้ -->
+      </tbody>
+    </table>
+    <div id="count">ออกกำลังกายแล้ว 0 วัน</div>
+
+    <script>
+      const calendarBody = document.getElementById('calendar-body');
+      const countDisplay = document.getElementById('count');
+      const year = 2025;
+      const month = 8; // กันยายน (0 = ม.ค., 8 = ก.ย.)
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const startDay = new Date(year, month, 1).getDay();
+
+      let checkedDays = 0;
+
+      function updateCount() {
+        const checked = document.querySelectorAll('.checked').length;
+        countDisplay.textContent = `ออกกำลังกายแล้ว ${checked} วัน`;
+      }
+
+      function createCalendar() {
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+          const row = document.createElement('tr');
+
+          for (let j = 0; j < 7; j++) {
+            const cell = document.createElement('td');
+            if (i === 0 && j < startDay) {
+              cell.textContent = "";
+            } else if (date <= daysInMonth) {
+              cell.textContent = date;
+              cell.addEventListener('click', () => {
+                cell.classList.toggle('checked');
+                updateCount();
+              });
+              date++;
+            } else {
+              cell.textContent = "";
+            }
+            row.appendChild(cell);
+          }
+
+          calendarBody.appendChild(row);
+        }
+      }
+
+      createCalendar();
+    </script>
+  </body>
+</html>
